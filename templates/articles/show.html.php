@@ -4,6 +4,7 @@
 <hr>
 <?= $article['content'] ?>
 
+
 <?php if (count($commentaires) === 0) : ?>
     <h2>Il n'y a pas encore de commentaires pour cet article ... SOYEZ LE PREMIER ! :D</h2>
 <?php else : ?>

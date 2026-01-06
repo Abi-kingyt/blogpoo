@@ -35,6 +35,20 @@ if (!$article_id) {
  * 
  * PS : Vous remarquez que ce sont les mêmes lignes que pour l'index.php ?!
  */
+
+
+require('libraries/utils.php');
+$pdo=render();
+$pageTitle = $article['title'];
+render('articles/show', [
+'pageTitle'=> $pageTitle,
+'article'=> $article,
+'commentaires'=>$commentaires,
+'article_id'=>$article_id
+]);
+
+
+
 require('libraries/database.php');
 $pdo=getPdo();
 

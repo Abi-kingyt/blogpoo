@@ -16,6 +16,10 @@
 require('libraries/database.php');
 $pdo=getPdo();
 
+
+require('libraries/utils.php');
+$pdo=render();
+
 /**
  * 2. Récupération des articles
  */
