@@ -26,6 +26,9 @@ $id = $_GET['id'];
  */
 require('libraries/database.php');
 $pdo=getPdo();
+
+require('libraries/utils.php');
+$pdo=redirect();
 /**
  * 3. Vérification que l'article existe bel et bien
  */

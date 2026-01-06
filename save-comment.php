@@ -58,6 +58,9 @@ if (!$author || !$article_id || !$content) {
 require('libraries/database.php');
 $pdo=getPdo();
 
+require('libraries/utils.php');
+$pdo=redirect();
+
 $query = $pdo->prepare('SELECT * FROM articles WHERE id = :article_id');
 $query->execute(['article_id' => $article_id]);
 
