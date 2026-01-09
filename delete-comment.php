@@ -6,6 +6,10 @@
  * On va donc vérifier que le paramètre "id" est bien présent en GET, qu'il correspond bien à un commentaire existant
  * Puis on le supprimera !
  */
+require_once('libraries/database.php'); 
+require_once('libraries/outils.php'); 
+require_once('libraries/models/Comment.php'); 
+$model = new Comment();
 
 /**
  * 1. Récupération du paramètre "id" en GET
@@ -25,34 +29,27 @@ $id = $_GET['id'];
  * 
  * PS : Vous remarquez que ce sont les mêmes lignes que pour l'index.php ?!
  */
-require('libraries/database.php');
-$pdo=getPdo();
-
-require('libraries/utils.php');
-$pdo=redirect();
+include_once('libraries/database.php');
+$pdo = getPdo();
 
 /**
  * 3. Vérification de l'existence du commentaire
  */
-$query = $pdo->prepare('SELECT * FROM comments WHERE id = :id');
-$query->execute(['id' => $id]);
-if ($query->rowCount() === 0) {
-    die("Aucun commentaire n'a l'identifiant $id !");
-}
+$commentaire = $model->find($id);
+if (!$commentaire) 
+    { die("Aucun commentaire n'a l'identifiant $id !"); }
 
 /**
  * 4. Suppression réelle du commentaire
  * On récupère l'identifiant de l'article avant de supprimer le commentaire
  */
 
-$commentaire = $query->fetch();
 $article_id = $commentaire['article_id'];
+$model->delete($id);
 
-$query = $pdo->prepare('DELETE FROM comments WHERE id = :id');
-$query->execute(['id' => $id]);
 
 /**
  * 5. Redirection vers l'article en question
  */
-header("Location: article.php?id=" . $article_id);
-exit();
+include_once('libraries/outils.php');
+redirect('article.php?id=' . $article_id);
